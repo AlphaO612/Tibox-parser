@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}Результат{% endblock %}
+
+{% block content %}
+<h2>Статистика по запросу</h2>
+<div class="container" style="width:100%;">
+    <div class="half" id="left">
+        <h3 style="font-weight: bold;">Объекты:</h3>
+        <p style="width:100%;">
+            {% for item in stat %}
+                <div id="equalation">{{ item }}  - <span style="color: #cc5454;">{{ stat[item] }} секунд</span></div>
+            {% endfor %}
+        </p>
+
+        <a href="{{ url_for("main_page") }}" id="solve-btn">< Назад</a>
+    </div>
+    <div class="half" id="right">
+        <h3>График</h3>
+        <img src="data:image/png;base64, {{ picture }}">
+    </div>
+</div>
+
+
+
+
+{% endblock %}
