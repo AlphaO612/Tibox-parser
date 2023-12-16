@@ -40,14 +40,14 @@ class Tibox:
     def cookies(self):
         return self.reqSes.cookies.get_dict()
 
-    def get_ticket(self) -> None:
+    def get_ticket(self):
         data = self.reqSes.post(
             self.siteMap['login'](),
             data=dict(institute=3, group=11, submit=""),
             headers=self.headers
         )
 
-    def get_lessons(self, dt: Optional[datetime.datetime] = None) -> list[Lesson]:
+    def get_lessons(self, dt= None):
         result = []
         if dt: dt = int(dt.timestamp())
 
@@ -94,10 +94,3 @@ class Tibox:
         return stat_data
 
 
-
-if __name__ == "__main__":
-    t = Tibox()
-    print(t.cookies)
-    print(json.dumps(
-        t.make_stat(datetime.datetime(2023,12,11),
-                    order_by=Tibox.OrderBy.DAYS), indent=4, ensure_ascii=False))
