@@ -49,6 +49,7 @@ class Tibox:
 
     def get_lessons(self, dt= None):
         result = []
+        
         if dt: dt = int(dt.timestamp())
 
         page = BeautifulSoup(self.reqSes.get(
@@ -57,20 +58,22 @@ class Tibox:
         ).content, "html.parser").find("div", {"class": "timetableBox"})
 
         parsed_data = page.findAll("div", {"class": "lesson"})
-        for item in parsed_data:
-            item_full = page.find(
-                "div",
-                {
-                    "id": item.find('a').get('data-src').strip('#')
-                }
-            )
-            result.append(Lesson(
-                name=item.find("p", {"id":"TextOne"}).text.split("(")[0],
-                t_start=datetime.datetime.strptime(item.find("div", {"id":"time"}).text.split("-")[0], "%H:%M"),
-                t_end=datetime.datetime.strptime(item.find("div", {"id":"time"}).text.split("-")[1], "%H:%M"),
-                teachers=item_full.find("span").text.strip("Профессора ").strip("Профессор ").split(", "),
-                text=item_full.find("p", {"id":"info"}).text
-            ))
+        if dt:
+          if datetime.datetime.fromtimestamp(dt).month != 1:
+            for item in parsed_data:
+                item_full = page.find(
+                    "div",
+                    {
+                        "id": item.find('a').get('data-src').strip('#')
+                    }
+                )
+                result.append(Lesson(
+                    name=item.find("p", {"id":"TextOne"}).text.split("(")[0],
+                    t_start=datetime.datetime.strptime(item.find("div", {"id":"time"}).text.split("-")[0], "%H:%M"),
+                    t_end=datetime.datetime.strptime(item.find("div", {"id":"time"}).text.split("-")[1], "%H:%M"),
+                    teachers=item_full.find("span").text.strip("Профессора ").strip("Профессор ").split(", "),
+                    text=item_full.find("p", {"id":"info"}).text
+                ))
         return result
 
     def make_stat(self, dt_start: datetime.datetime, order_by: str = OrderBy.TEACHERS, days: int = 14):

@@ -9,12 +9,12 @@
         <h3 style="font-weight: bold;">Объекты:</h3>
         <p style="width:100%;">
             {% for item in stat %}
-                <div id="equalation">{{ item }}  - <span style="color: #cc5454;">{{ stat[item] }} секунд</span></div>
+                <div id="equalation">{{ item }}  - <span style="color: #cc5454;">{{ stat[item] }} {{ type_time }}.</span></div>
             {% endfor %}
         </p>
-        <h3 style="font-weight: bold;">min: <div id="equalation">{{ min[0] }}  - <span style="color: #cc5454;">{{ min[1] }} секунд</span></div></h3>
-        <h3 style="font-weight: bold;">avg: <div id="equalation">{{ avg }}</div></h3>
-        <h3 style="font-weight: bold;">max: <div id="equalation">{{ max[0] }}  - <span style="color: #cc5454;">{{ max[1] }} секунд</span></div></h3>
+        <h3 style="font-weight: bold;">min: <div id="equalation">{{ min[0] }}  - <span style="color: #cc5454;">{{ min[1] }} {{ type_time }}.</span></div></h3>
+        <h3 style="font-weight: bold;">avg: <div id="equalation">{{ avg }} {{ type_time }}.</div></h3>
+        <h3 style="font-weight: bold;">max: <div id="equalation">{{ max[0] }}  - <span style="color: #cc5454;">{{ max[1] }} {{ type_time }}.</span></div></h3>
 
         <a href="{{ url_for("main_page") }}" id="solve-btn">< Назад</a>
     </div>
